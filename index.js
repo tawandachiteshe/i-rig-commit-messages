@@ -5,7 +5,7 @@ function main() {
   for (let i = 0; i < 2000; i++) {
     writeFile(`./test-${i + 2}.txt`, `hello world ${i}`, (err) => { });
 
-    exec("git add -A", (error, stdout, stderr) => {
+    le  exec("git add -A", (error, stdout, stderr) => {
       if (error) {
         console.log(`error: ${error.message}`);
         return;
