@@ -2,8 +2,8 @@ import { exec } from "child_process";
 import { writeFile } from "fs";
 
 function main() {
-  for (let i = 0; i < 10_000; i++) {
-    writeFile(`./test-${i}.txt`, `hello world ${i}`, (err) => { });
+  for (let i = 0; i < 2000; i++) {
+    writeFile(`./test-${i + 2}.txt`, `hello world ${i}`, (err) => { });
 
     exec("git add .", (error, stdout, stderr) => {
       if (error) {
@@ -18,7 +18,7 @@ function main() {
     });
 
     exec(
-      'git commit --date "3 days ago" -m "Update"',
+      `git commit --date "${i} days ago" -m "Update"`,
       (error, stdout, stderr) => {
         if (error) {
           console.log(`error: ${error.message}`);
