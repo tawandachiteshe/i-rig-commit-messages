@@ -2,10 +2,10 @@ import { exec } from "child_process";
 import { writeFile } from "fs";
 
 function main() {
-  for (let i = 0; i < 2000; i++) {
+  for (let i = 0; i < 2; i++) {
     writeFile(`./test-${i + 2}.txt`, `hello world ${i}`, (err) => { });
 
-    le  exec("git add -A", (error, stdout, stderr) => {
+    let a = exec("git add -A", (error, stdout, stderr) => {
       if (error) {
         console.log(`error: ${error.message}`);
         return;
@@ -17,7 +17,11 @@ function main() {
       console.log(`stdout: ${stdout}`);
     });
 
-    exec(
+    a.on("message", (message) => {
+      console.log(message);
+      a.kill();
+    });
+    let b = exec(
       `git commit --date "${i} days ago" -m "Update ${i}"`,
       (error, stdout, stderr) => {
         if (error) {
@@ -31,7 +35,12 @@ function main() {
         console.log(`stdout: ${stdout}`);
       },
     );
-  }
+
+   
+    b.on("message", (message) => {
+      console.log(message);
+      b.kill();
+    });  }
 }
 
 main();
